@@ -1,0 +1,23 @@
+DESCRIPTION = "face model"
+
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://CMakeLists.txt;md5=deda25395684444c52a685765b8b4c27"
+# While this item does not require it, it depends on ffmpeg which does
+
+
+inherit pkgconfig cmake 
+inherit externalsrc 
+
+EXTERNALSRC_pn-${PN} = "${HOME}/dev/projects/ezloml_dev_build_dep_branch/facearm"
+EXTERNALSRC_BUILD_pn-${PN} = "${HOME}/dev/projects/ezloml_dev_build_dep_branch/facearm/build"
+
+DEPENDS += " \
+    openblas \
+    lapack \
+    cmake-native \
+    ninja-native \
+"
+
+do_install() {
+}
+

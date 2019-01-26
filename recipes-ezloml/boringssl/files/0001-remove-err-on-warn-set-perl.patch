@@ -1,0 +1,21 @@
+--- a/CMakeLists.txt	2019-01-16 13:23:22.836425637 +0200
++++ b/CMakeLists.txt	2019-01-16 13:23:18.836239857 +0200
+@@ -35,7 +35,8 @@
+     set(GO_EXECUTABLE "go")
+   endif()
+ else()
+-  find_package(Perl REQUIRED)
++  #find_package(Perl REQUIRED)
++  set(PERL_EXECUTABLE perl)  
+   find_program(GO_EXECUTABLE go)
+ endif()
+ 
+@@ -101,7 +102,7 @@
+ if(CMAKE_COMPILER_IS_GNUCXX OR CLANG)
+   # Note clang-cl is odd and sets both CLANG and MSVC. We base our configuration
+   # primarily on our normal Clang one.
+-  set(C_CXX_FLAGS "-Werror -Wformat=2 -Wsign-compare -Wmissing-field-initializers -Wwrite-strings")
++  set(C_CXX_FLAGS "-Wformat=2 -Wsign-compare -Wmissing-field-initializers -Wwrite-strings")
+   if(MSVC)
+     # clang-cl sets different default warnings than clang. It also treats -Wall
+     # as -Weverything, to match MSVC. Instead -W3 is the alias for -Wall.

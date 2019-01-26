@@ -1,0 +1,139 @@
+diff --git a/FaceAlignment/CMakeLists.txt b/FaceAlignment/CMakeLists.txt
+index ed878c8..2170665 100644
+--- a/FaceAlignment/CMakeLists.txt
++++ b/FaceAlignment/CMakeLists.txt
+@@ -3,17 +3,25 @@ cmake_minimum_required(VERSION 2.8.4)
+ project(seeta_fa_lib)
+ 
+ # Build options
+-option(BUILD_EXAMPLES  "Set to ON to build examples"  ON)
++option(BUILD_EXAMPLES  "Set to ON to build examples"  OFF)
++option(STATIC_OPTION "STATIC_OPTION" ON)
++option(USE_SSE         "USE_SSE"  OFF)
++
++if(STATIC_OPTION)
++        set(BUILD_TYPE "STATIC")
++else()
++        set(BUILD_TYPE "SHARED")
++endif()
+ 
+-# Use C++11
+-#set(CMAKE_CXX_STANDARD 11)
+-#set(CMAKE_CXX_STANDARD_REQUIRED ON)
+-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+-message(STATUS "C++11 support has been enabled by default.")
++# Use C++14
++set(CMAKE_CXX_STANDARD 14)
++set(CMAKE_CXX_STANDARD_REQUIRED ON)
+ 
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+ 
+-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse4.1")
++if (USE_SSE)
++    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse4.1")
++endif()
+ 
+ include_directories(include)
+ 
+@@ -23,8 +31,7 @@ set(src_files
+     src/sift.cpp
+     )
+ 
+-add_library(seeta_fa_lib SHARED ${src_files})
+-set(fa_required_libs seeta_fa_lib)
++add_library(seeta_fa_lib ${BUILD_TYPE} ${src_files})
+ 
+ if (BUILD_EXAMPLES)
+     message(STATUS "Build with examples.")
+diff --git a/FaceDetection/CMakeLists.txt b/FaceDetection/CMakeLists.txt
+index 6868e05..485ab0c 100644
+--- a/FaceDetection/CMakeLists.txt
++++ b/FaceDetection/CMakeLists.txt
+@@ -2,17 +2,25 @@ cmake_minimum_required(VERSION 3.1.0)
+ 
+ project(seeta_facedet_lib)
+ 
++option(STATIC_OPTION "STATIC_OPTION" ON)
++
++if(STATIC_OPTION)
++        set(BUILD_TYPE "STATIC")
++else()
++        set(BUILD_TYPE "SHARED")
++endif()
++
+ # Build options
+-option(BUILD_EXAMPLES  "Set to ON to build examples"  ON)
++option(BUILD_EXAMPLES  "Set to ON to build examples"  OFF)
+ option(USE_OPENMP      "Set to ON to build use openmp"  ON)
+-option(USE_SSE         "Set to ON to build use SSE"  ON)
++option(USE_SSE         "Set to ON to build use SSE"  OFF)
+ 
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+ 
+-# Use C++11
+-set(CMAKE_CXX_STANDARD 11)
++# Use C++14
++set(CMAKE_CXX_STANDARD 14)
+ set(CMAKE_CXX_STANDARD_REQUIRED ON)
+-message(STATUS "C++11 support has been enabled by default.")
++message(STATUS "C++14 support has been enabled by default.")
+ 
+ # Use SSE
+ if (USE_SSE)
+@@ -50,7 +58,7 @@ set(src_files
+     )
+ 
+ # Build shared library
+-add_library(seeta_facedet_lib SHARED ${src_files})
++add_library(seeta_facedet_lib ${BUILD_TYPE} ${src_files})
+ set(facedet_required_libs seeta_facedet_lib)
+ 
+ # Build examples
+diff --git a/FaceIdentification/CMakeLists.txt b/FaceIdentification/CMakeLists.txt
+index 7c03b7c..682c4db 100644
+--- a/FaceIdentification/CMakeLists.txt
++++ b/FaceIdentification/CMakeLists.txt
+@@ -2,12 +2,23 @@ cmake_minimum_required (VERSION 2.6)
+ 
+ project (viplnet)
+ 
++option(STATIC_OPTION "STATIC_OPTION" ON)
++
++if(STATIC_OPTION)
++        set(BUILD_TYPE "STATIC")
++else()
++        set(BUILD_TYPE "SHARED")
++endif()
++
++
+ set (VIPLNET_VERSION_MAJOR 4)
+ set (VIPLNET_VERSION_MINOR 5)
+ 
+ set(CMAKE_BUILD_TYPE "Release")
+-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -g -ggdb")
+-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -std=c++11 -O2")
++
++# Use C++14
++set(CMAKE_CXX_STANDARD 14)
++set(CMAKE_CXX_STANDARD_REQUIRED ON)
+ 
+ MESSAGE(STATUS "other platform: ${CMAKE_SYSTEM_NAME}")
+ 
+@@ -28,7 +39,7 @@ add_subdirectory(src)
+ 
+ aux_source_directory(./src SRC_LIST)
+ aux_source_directory(./tools TOOLS_LIST)
+-add_library(viplnet SHARED ${SRC_LIST} ${TOOLS_LIST})
++add_library(viplnet ${BUILD_TYPE} ${SRC_LIST} ${TOOLS_LIST})
+ set_target_properties(viplnet PROPERTIES 
+   VERSION ${VIPLNET_VERSION_MAJOR}.${VIPLNET_VERSION_MINOR} 
+   SOVERSION ${VIPLNET_VERSION_MAJOR}.${VIPLNET_VERSION_MINOR}) 
+diff --git a/FaceIdentification/src/CMakeLists.txt b/FaceIdentification/src/CMakeLists.txt
+index ac25ae7..c06ae51 100644
+--- a/FaceIdentification/src/CMakeLists.txt
++++ b/FaceIdentification/src/CMakeLists.txt
+@@ -1,2 +1,2 @@
+-set(VIPLNET_TEST_DIR ${PROJECT_SRC_DIR}/test)
+-add_subdirectory(test)
++#set(VIPLNET_TEST_DIR ${PROJECT_SRC_DIR}/test)
++#add_subdirectory(test)

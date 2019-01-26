@@ -1,0 +1,14 @@
+diff --git a/lib/rpc/client.cc b/lib/rpc/client.cc
+index 13f5702..de74715 100644
+--- a/lib/rpc/client.cc
++++ b/lib/rpc/client.cc
+@@ -192,8 +192,7 @@ void client::wait_conn() {
+ }
+ 
+ int client::get_next_call_idx() {
+-    ++(pimpl->call_idx_);
+-    return pimpl->call_idx_;
++    return (++pimpl->call_idx_);
+ }
+ 
+ void client::post(std::shared_ptr<RPCLIB_MSGPACK::sbuffer> buffer, int idx,
