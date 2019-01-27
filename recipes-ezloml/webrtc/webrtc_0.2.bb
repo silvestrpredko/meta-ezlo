@@ -145,6 +145,10 @@ do_install( ) {
     #install -d ${D}${libdir}/webrtc/api/video_codecs
     #install -m 0644 obj/api/video_codecs/*.a ${D}${libdir}/webrtc/api/video_codecs/
 
-    install -d ${D}${includedir}
+    #install -d ${D}${includedir}
     #ln -s ${EXTERNALSRC} ${D}${includedir}/webrtc
 }
+
+do_package_qa[noexec] = "1"
+
+

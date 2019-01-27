@@ -18,7 +18,6 @@ DEPENDS += " \
     boost \
     webrtc \
     spdlog \
-    lame \
     openssl \
     pusher-cpp \
     cppcodec \
@@ -31,13 +30,8 @@ DEPENDS += " \
     fann \
     wiringpi \
     gperftools \
-    libva \
     sunxi-mali \
-    x264 \
-    x265 \
-    libuv \
-    libvpx \
-    libvdpau \
+    ffmpeg \
     openblas \
     cmake-native \
     ninja-native \
