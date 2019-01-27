@@ -49,6 +49,3 @@ do_install() {
     oe_runmake install DESTDIR=${D}
     chown -R root:root ${D}
 }
-
-
-inherit pkgconfig
