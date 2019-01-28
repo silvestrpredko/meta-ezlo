@@ -34,8 +34,7 @@ CONFIGUREOPTS = " \
     --enable-vp9 \
     --enable-libs \
     --disable-install-docs \
-    --disable-static \
-    --enable-shared \
+    --enable-static \
     --prefix=${prefix} \
     --libdir=${libdir} \
     --size-limit=16384x16384 \

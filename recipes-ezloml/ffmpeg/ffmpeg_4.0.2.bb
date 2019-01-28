@@ -122,6 +122,7 @@ EXTRA_OECONF = " \
 "
 
 EXTRA_OECONF_append_linux-gnux32 = " --disable-asm"
+EXTRA_OECONF_append = " --enable-static"
 # gold crashes on x86, another solution is to --disable-asm but thats more hacky
 # ld.gold: internal error in relocate_section, at ../../gold/i386.cc:3684
 
