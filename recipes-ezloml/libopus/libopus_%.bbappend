@@ -1,1 +1,1 @@
-EXTRA_OECONF_append = " --enable-static" 
+EXTRA_OECONF_append = " --disable-shared" 

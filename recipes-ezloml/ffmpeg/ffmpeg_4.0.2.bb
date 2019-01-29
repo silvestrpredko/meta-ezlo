@@ -41,7 +41,7 @@ ARM_INSTRUCTION_SET_armv6 = "arm"
 # libpostproc was previously packaged from a separate recipe
 PROVIDES = "libav libpostproc"
 
-DEPENDS = "alsa-lib zlib libogg nasm-native libass libfdk-aac libopus libx265"
+DEPENDS = "alsa-lib zlib libogg nasm-native libass libfdk-aac libopus libx265 fribidi"
 
 inherit autotools pkgconfig
 
@@ -121,9 +121,17 @@ EXTRA_OECONF = " \
     --cpu=${@cpu(d)} \
     --pkg-config=pkg-config \
 "
-EXTRA_OECONF_append = " --disable-shared --enable-static "
+
+EXTRA_OECONF_append = " \ 
+    --disable-shared \
+    --enable-static \ 
+    --pkg-config-flags="--static" \
+    --extra-libs="-lpthread -lm -lz" \
+    --extra-ldexeflags="--static" \
+"
+
 EXTRA_OECONF_append_linux-gnux32 = " --disable-asm"
-EXTRA_OECONF_append = " --enable-static"
+
 # gold crashes on x86, another solution is to --disable-asm but thats more hacky
 # ld.gold: internal error in relocate_section, at ../../gold/i386.cc:3684
 

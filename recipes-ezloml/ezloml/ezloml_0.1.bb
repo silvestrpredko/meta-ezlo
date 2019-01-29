@@ -27,15 +27,10 @@ DEPENDS += " \
     rapidjson \
     websocketpp \
     seeta-face-engine \
-    fann \
     wiringpi \
     gperftools \
     sunxi-mali \
     ffmpeg \
-    libx11 \   
-    virtual/egl \
-    virtual/libgl \
-    virtual/libgles2 \
     openblas \
     cmake-native \
     ninja-native \

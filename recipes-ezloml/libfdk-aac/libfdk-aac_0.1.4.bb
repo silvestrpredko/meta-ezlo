@@ -12,4 +12,4 @@ SRC_URI[md5sum] = "300fc7f0e1f97c78f624834dfd185c3e"
 
 CFLAGS += "-Wno-narrowing"
 CXXFLAGS += "-Wno-narrowing"
-EXTRA_OECONF_append = " --enable-static"
+EXTRA_OECONF_append = " --enable-static --disable-shared"
