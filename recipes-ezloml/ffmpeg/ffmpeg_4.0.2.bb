@@ -27,6 +27,7 @@ SRC_URI = "https://www.ffmpeg.org/releases/${BP}.tar.xz \
            file://mips64_cpu_detection.patch \
            file://CVE-2018-15822.patch \
            file://0001-postproc-postprocess_template-remove-FF_REG_sp-from-.patch \
+           file://0002-added_sw_format_12.patch \
            "
 SRC_URI[md5sum] = "ae0bfdf809306a212b4f0e6eb8d1c75e"
 SRC_URI[sha256sum] = "a95c0cc9eb990e94031d2183f2e6e444cc61c99f6f182d1575c433d62afb2f97"

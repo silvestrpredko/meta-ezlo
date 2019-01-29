@@ -1,0 +1,15 @@
+diff --git a/libavutil/hwcontext_vdpau.c b/libavutil/hwcontext_vdpau.c
+index c11c3cfdab..20f2c0f1bf 100644
+--- a/libavutil/hwcontext_vdpau.c
++++ b/libavutil/hwcontext_vdpau.c
+@@ -244,6 +244,10 @@ static int vdpau_frames_init(AVHWFramesContext *ctx)
+ 
+     int i;
+ 
++    if (ctx->sw_format == 12) {
++        ctx->sw_format = 0;
++    }
++
+     for (i = 0; i < FF_ARRAY_ELEMS(vdpau_pix_fmts); i++) {
+         if (vdpau_pix_fmts[i].frames_sw_format == ctx->sw_format) {
+             priv->chroma_type = vdpau_pix_fmts[i].chroma_type;
