@@ -12,7 +12,7 @@ inherit externalsrc
 EXTERNALSRC_pn-${PN} = "${HOME}/dev/ezloml_dev/ezloml"
 EXTERNALSRC_BUILD_pn-${PN} = "${HOME}/dev/ezloml_dev/ezloml/build"
 
-EXTRA_OECMAKE += "-DPC_BUILD=OFF"
+EXTRA_OECMAKE += "-DPC_BUILD=OFF -DWEBRTC_SRC_PATH=${WEBRTC_SRC_PATH}"
 
 DEPENDS += " \
     boost \
@@ -32,6 +32,10 @@ DEPENDS += " \
     gperftools \
     sunxi-mali \
     ffmpeg \
+    libx11 \   
+    virtual/egl \
+    virtual/libgl \
+    virtual/libgles2 \
     openblas \
     cmake-native \
     ninja-native \
