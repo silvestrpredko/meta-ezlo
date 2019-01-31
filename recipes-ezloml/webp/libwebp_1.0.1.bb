@@ -24,8 +24,7 @@ EXTRA_OECONF = " \
     --enable-libwebpmux \
     --enable-libwebpdemux \
     --enable-threading \
-    --enable-static \
-"
+    "
 # Do not trust configure to determine if neon is available.
 #
 EXTRA_OECONF_append_arm = " \
@@ -49,6 +48,8 @@ PACKAGECONFIG[tiff] = "--enable-tiff,--disable-tiff,tiff"
 PACKAGECONFIG[gl] = "--enable-gl,--disable-gl,mesa-glut"
 
 PACKAGES =+ "${PN}-gif2webp"
+
+EXTRA_OECONF_append = " --enable-static"
 
 DESCRIPTION_${PN}-gif2webp = "Simple tool to convert animated GIFs to WebP"
 FILES_${PN}-gif2webp = "${bindir}/gif2webp"

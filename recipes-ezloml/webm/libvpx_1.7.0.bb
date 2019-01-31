@@ -36,7 +36,6 @@ CONFIGUREOPTS = " \
     --disable-install-docs \
     --disable-unit-tests \
     --disable-examples \
-    --disable-shared \
     --enable-static \
     --enable-pic \
     --prefix=${prefix} \

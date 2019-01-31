@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=62d89c5dcb0583609ea919c56be0ee76"
 ARM_INSTRUCTION_SET_armv4 = "arm"
 ARM_INSTRUCTION_SET_armv5 = "arm"
 
-DEPENDS = "libtool swig-native bzip2 zlib glib-2.0 libwebp"
+DEPENDS = "libtool swig-native bzip2 zlib glib-2.0"
 
 SRCREV_opencv = "b38c50b3d0c31e82294315ec44b54b7ef559ef12"
 SRCREV_contrib = "1f6d6f06266e1ef336437ae5404bee1c65d42cda"
@@ -20,7 +20,7 @@ SRC_URI[tinydnn.sha256sum] = "e2c61ce8c5debaa644121179e9dbdcf83f497f39de853f8dd5
 
 def ipp_filename(d):
     import re
-    arch = d.getVar('TARGET_ARCH')
+    arch = d.getVar('TARGET_ARCH', True)
     if re.match("i.86$", arch):
         return "ippicv_2017u3_lnx_ia32_general_20180518.tgz"
     else:
@@ -28,7 +28,7 @@ def ipp_filename(d):
 
 def ipp_md5sum(d):
     import re
-    arch = d.getVar('TARGET_ARCH')
+    arch = d.getVar('TARGET_ARCH', True)
     if re.match("i.86$", arch):
         return "ea72de74dae3c604eb6348395366e78e"
     else:
@@ -81,9 +81,13 @@ EXTRA_OECMAKE = "-DOPENCV_EXTRA_MODULES_PATH=${WORKDIR}/contrib/modules \
 "
 EXTRA_OECMAKE_append_x86 = " -DX86=ON"
 
-EXTRA_OECMAKE_append = " -DBUILD_TESTS=OFF -DBUILD_opencv_apps=OFF -DBUILD_PERF_TESTS=OFF -DBUILD_SHARED_LIBS=OFF"
+EXTRA_OECMAKE_append = " -DBUILD_TESTS=OFF -DBUILD_opencv_apps=OFF -DBUILD_PERF_TESTS=OFF \
+                         -DBUILD_SHARED_LIBS=OFF -DBUILD_ZLIB=ON -DBUILD_OPENEXR=ON \
+                         -DBUILD_ILMIMF=ON -DBUILD_TBB=ON -DBUILD_JASPER=ON \
+                         -DBUILD_PNG=ON -DBUILD_JPEG=ON -DBUILD_TIFF=ON -DBUILD_WEBP=ON \
+"
 
-PACKAGECONFIG ??= "python3 eigen jpeg png tiff v4l libv4l gstreamer samples tbb gphoto2 \
+PACKAGECONFIG ??= " jpeg png tiff \
     ${@bb.utils.contains("DISTRO_FEATURES", "x11", "gtk", "", d)} \
     ${@bb.utils.contains("LICENSE_FLAGS_WHITELIST", "commercial", "libav", "", d)}"
 
@@ -138,12 +142,12 @@ python populate_packages_prepend () {
     do_split_packages(d, cv_libdir, '^lib(.*)\.a$', 'lib%s-dev', 'OpenCV %s development package', extra_depends='${PN}-dev')
     do_split_packages(d, cv_libdir, '^lib(.*)\.so\.*', 'lib%s', 'OpenCV %s library', extra_depends='', allow_links=True)
 
-    pn = d.getVar('PN')
+    pn = d.getVar('PN', True)
     metapkg =  pn + '-dev'
     d.setVar('ALLOW_EMPTY_' + metapkg, "1")
     blacklist = [ metapkg ]
     metapkg_rdepends = [ ]
-    packages = d.getVar('PACKAGES').split()
+    packages = d.getVar('PACKAGES', True).split()
     for pkg in packages[1:]:
         if not pkg in blacklist and not pkg in metapkg_rdepends and pkg.endswith('-dev'):
             metapkg_rdepends.append(pkg)

@@ -41,12 +41,12 @@ ARM_INSTRUCTION_SET_armv6 = "arm"
 # libpostproc was previously packaged from a separate recipe
 PROVIDES = "libav libpostproc"
 
-DEPENDS = "alsa-lib zlib libogg nasm-native libass libfdk-aac libopus libx265 fribidi"
+DEPENDS = "alsa-lib zlib libogg nasm-native libass libfdk-aac libopus x265 fribidi expat freetype"
 
 inherit autotools pkgconfig
 
 PACKAGECONFIG ??= "avdevice avfilter avcodec avformat swresample swscale postproc \
-                   bzlib gpl lzma theora x264 vpx vdpau mp3lame \
+                   gpl lzma theora x264 vpx vdpau mp3lame \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xv', '', d)}"
 
 # libraries to build in addition to avutil
@@ -81,7 +81,7 @@ PACKAGECONFIG[xv] = "--enable-outdev=xv,--disable-outdev=xv,libxv"
 USE_NONFREE = "${@bb.utils.contains_any('PACKAGECONFIG', [ 'openssl' ], 'yes', '', d)}"
 USE_NONFREE = 'yes'
 def cpu(d):
-    for arg in (d.getVar('TUNE_CCARGS') or '').split():
+    for arg in (d.getVar('TUNE_CCARGS', True) or '').split():
         if arg.startswith('-mcpu='):
             return arg[6:]
     return 'generic'
@@ -125,10 +125,10 @@ EXTRA_OECONF = " \
 EXTRA_OECONF_append = " \ 
     --disable-shared \
     --enable-static \ 
-    --pkg-config-flags="--static" \
-    --extra-libs="-lpthread -lm -lz" \
-    --extra-ldexeflags="--static" \
 "
+#--extra-ldexeflags="--static" 
+#--extra-libs="-lpthread -lNE10 -lm -lz"
+#--pkg-config-flags="--static"
 
 EXTRA_OECONF_append_linux-gnux32 = " --disable-asm"
 

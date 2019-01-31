@@ -18,7 +18,8 @@ DEPENDS += " \
     boost \
     webrtc \
     spdlog \
-    openssl \
+    boringssl \
+    curl \
     pusher-cpp \
     cppcodec \
     rpclib \
@@ -29,11 +30,8 @@ DEPENDS += " \
     seeta-face-engine \
     wiringpi \
     gperftools \
-    sunxi-mali \
-    ffmpeg \
     openblas \
-    cmake-native \
-    ninja-native \
+    virtual/egl \
 "
 #lapack
 

@@ -16,5 +16,5 @@ CVE_PRODUCT = "gnu_fribidi"
 
 BBCLASSEXTEND = "native nativesdk"
 
-EXTRA_OECONF_append = " --disable-shared --enable-static --disable-docs" 
+EXTRA_OECONF_append = " --enable-static" 
 

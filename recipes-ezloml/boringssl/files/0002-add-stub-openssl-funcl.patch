@@ -1,0 +1,27 @@
+diff --git a/crypto/evp/evp.c b/crypto/evp/evp.c
+index 4feadb7b4..62b6343c5 100644
+--- a/crypto/evp/evp.c
++++ b/crypto/evp/evp.c
+@@ -356,6 +356,8 @@ void OpenSSL_add_all_algorithms(void) {}
+ 
+ void OPENSSL_add_all_algorithms_conf(void) {}
+ 
++void OPENSSL_add_all_algorithms_noconf(void) {}
++
+ void OpenSSL_add_all_ciphers(void) {}
+ 
+ void OpenSSL_add_all_digests(void) {}
+diff --git a/include/openssl/evp.h b/include/openssl/evp.h
+index c187ac198..67503ebc0 100644
+--- a/include/openssl/evp.h
++++ b/include/openssl/evp.h
+@@ -729,6 +729,9 @@ OPENSSL_EXPORT void OpenSSL_add_all_algorithms(void);
+ // OPENSSL_add_all_algorithms_conf does nothing.
+ OPENSSL_EXPORT void OPENSSL_add_all_algorithms_conf(void);
+ 
++// OPENSSL_add_all_algorithms_conf does nothing.
++OPENSSL_EXPORT void OPENSSL_add_all_algorithms_noconf(void);
++
+ // OpenSSL_add_all_ciphers does nothing.
+ OPENSSL_EXPORT void OpenSSL_add_all_ciphers(void);
+ 

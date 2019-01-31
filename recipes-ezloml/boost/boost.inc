@@ -45,11 +45,11 @@ PACKAGECONFIG[graph_parallel] = ",,,boost-mpi mpich"
 PACKAGECONFIG[mpi] = ",,mpich"
 PACKAGECONFIG[python] = ",,python3"
 
-BOOST_LIBS += "\
-    ${@bb.utils.filter('PACKAGECONFIG', 'locale python', d)} \
-    ${@bb.utils.contains('PACKAGECONFIG', 'graph_parallel', 'graph_parallel mpi', \
-                         bb.utils.filter('PACKAGECONFIG', 'mpi', d), d)} \
-"
+#BOOST_LIBS += "\
+#    ${@bb.utils.filter('PACKAGECONFIG', 'locale python', d)} \
+#    ${@bb.utils.contains('PACKAGECONFIG', 'graph_parallel', 'graph_parallel mpi', \
+#                         bb.utils.filter('PACKAGECONFIG', 'mpi', d), d)} \
+#"
 
 inherit python3-dir
 PYTHON_ROOT = "${STAGING_DIR_HOST}/${prefix}"
@@ -59,11 +59,11 @@ PACKAGES = "${PN}-dbg ${BOOST_PACKAGES}"
 python __anonymous () {
     packages = []
     extras = []
-    for lib in d.getVar('BOOST_LIBS').split():
+    for lib in d.getVar('BOOST_LIBS', 1).split():
         extras.append("--with-%s" % lib)
         pkg = "boost-%s" % lib.replace("_", "-")
         packages.append(pkg)
-        if not d.getVar("FILES_%s" % pkg):
+        if not d.getVar("FILES_%s" % pkg, 1):
                 d.setVar("FILES_%s" % pkg, "${libdir}/libboost_%s*.so.*" % lib)
     d.setVar("BOOST_PACKAGES", " ".join(packages))
     d.setVar("BJAM_EXTRA", " ".join(extras))
@@ -134,14 +134,45 @@ BJAM_TOOLS   = "--ignore-site-config \
 		'--layout=system' \
 		"
 
-# use PARALLEL_MAKE to speed up the build
-BOOST_PARALLEL_MAKE = "${@oe.utils.parallel_make_argument(d, '-j%d')}"
+# https://svn.boost.org/trac/boost/ticket/7634
+def get_boost_parallel_make(d):
+    pm = d.getVar('PARALLEL_MAKE', True)
+    if pm:
+        # look for '-j' and throw other options (e.g. '-l') away
+        # because they might have different meaning in bjam
+        pm = pm.split()
+        while pm:
+            v = None
+            opt = pm.pop(0)
+            if opt == '-j':
+                v = pm.pop(0)
+            elif opt.startswith('-j'):
+                v = opt[2:].strip()
+            else:
+                v = None
+
+            if v:
+                v = min(64, int(v))
+                return '-j' + str(v)
+
+    return ""
+
+BOOST_PARALLEL_MAKE = "${@get_boost_parallel_make(d)}"
 BJAM_OPTS    = '${BOOST_PARALLEL_MAKE} -d+2 -q \
 		${BJAM_TOOLS} \
 		-sBOOST_BUILD_USER_CONFIG=${WORKDIR}/user-config.jam \
 		--build-dir=${S}/${TARGET_SYS} \
 		--disable-icu \
 		${BJAM_EXTRA}'
+
+# use PARALLEL_MAKE to speed up the build
+#BOOST_PARALLEL_MAKE = "${@oe.utils.parallel_make_argument(d, '-j%d')}"
+#BJAM_OPTS    = '${BOOST_PARALLEL_MAKE} -d+2 -q \
+#		${BJAM_TOOLS} \
+#		-sBOOST_BUILD_USER_CONFIG=${WORKDIR}/user-config.jam \
+#		--build-dir=${S}/${TARGET_SYS} \
+#		--disable-icu \
+#		${BJAM_EXTRA}'
 
 # Native compilation of bzip2 isn't working
 BJAM_OPTS_append_class-native = ' -sNO_BZIP2=1'

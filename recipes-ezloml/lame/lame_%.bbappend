@@ -1,1 +1,1 @@
-EXTRA_OECONF_append = " --enable-nasm --disable-shared" 
+EXTRA_OECONF_append = " --enable-nasm --enable-static" 
