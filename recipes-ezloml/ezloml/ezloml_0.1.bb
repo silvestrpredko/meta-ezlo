@@ -35,6 +35,12 @@ DEPENDS += " \
 "
 #lapack
 
+
+do_configure_append() {
+    rm -f ${STAGING_DIR_TARGET}/usr/include/openssl/*
+    cp ${STAGING_DIR_TARGET}/usr/lib/boringssl/include/openssl/* ${STAGING_DIR_TARGET}/usr/include/openssl/
+}
+    
 do_install() {
 }
 

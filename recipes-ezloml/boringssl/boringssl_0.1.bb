@@ -11,7 +11,6 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=9b082148f9953258347788edb83e401b"
 
 SRC_URI += "\
         file://0001-remove-err-on-warn-set-perl.patch \
-        file://0002-add-stub-openssl-funcl.patch \
 "
 
 do_install(){
