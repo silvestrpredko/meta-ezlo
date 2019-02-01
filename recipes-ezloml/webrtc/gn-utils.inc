@@ -14,7 +14,7 @@ def gn_host_arch_name(d):
         r'i[3456]86$': 'x86',
         r'x86_64$': 'x64',
     }
-    build_arch = d.getVar("BUILD_ARCH", True)
+    build_arch = d.getVar("BUILD_ARCH")
     for arch_regexp, gn_arch_name in arch_translations.items():
         if re.match(arch_regexp, build_arch):
             return gn_arch_name
@@ -41,20 +41,20 @@ BUILD_LD_toolchain-clang = "clang"
 # clang happens to be default compiler for OE we should let it use clang
 def is_default_cc_clang(d):
     """Return true if clang is default cross compiler."""
-    toolchain = d.getVar("TOOLCHAIN", True)
-    overrides = d.getVar("OVERRIDES", True)
+    toolchain = d.getVar("TOOLCHAIN")
+    overrides = d.getVar("OVERRIDES")
     if toolchain == "clang" and "toolchain-clang" in overrides.split(":"):
         return "true"
     return "false"
 
 def clang_install_path(d):
     """Return clang compiler install path."""
-    return d.getVar("STAGING_BINDIR_NATIVE", True)
+    return d.getVar("STAGING_BINDIR_NATIVE")
 
 def gn_target_arch_name(d):
     """Returns a GN architecture name corresponding to the target machine's
     architecture."""
-    name = d.getVar("GN_TARGET_ARCH_NAME", True)
+    name = d.getVar("GN_TARGET_ARCH_NAME")
     if name is None:
         bb.fatal('Unsupported target architecture. A valid override for the '
                  'GN_TARGET_ARCH_NAME variable could not be found.')
