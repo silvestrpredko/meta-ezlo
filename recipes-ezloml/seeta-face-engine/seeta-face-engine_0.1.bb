@@ -15,20 +15,20 @@ inherit cmake
 S = "${WORKDIR}/git"
 
 do_configure() {
-    cmake -H${S}/FaceDetection -B${B}/FaceDetection -GNinja
-    cmake -H${S}/FaceAlignment -B${B}/FaceAlignment -GNinja
-    cmake -H${S}/FaceIdentification -B${B}/FaceIdentification -GNinja
+    cmake -H${S}/FaceDetection -B${B}/FaceDetection 
+    cmake -H${S}/FaceAlignment -B${B}/FaceAlignment 
+    cmake -H${S}/FaceIdentification -B${B}/FaceIdentification 
 }
 
 do_compile() {
     cd ${B}/FaceDetection
-    ninja
+    make -j
 
     cd ${B}/FaceAlignment
-    ninja
+    make -j
 
     cd ${B}/FaceIdentification
-    ninja
+    make -j
 }
 
 do_install() {
