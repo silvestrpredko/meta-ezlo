@@ -1,0 +1,47 @@
+# Common configuration for all Machine types
+AUTHOR = "Dimitris Tassopoulos"
+MACHINE = 'orange-pi-plus2'
+DISTRO = "poky"
+
+PACKAGE_CLASSES ?= " package_deb"
+RM_OLD_IMAGE = "1"
+CONF_VERSION = "1"
+
+INHERIT += " rm_work"
+
+DISTRO_FEATURES_append = " x11 opengl"
+
+BB_GENERATE_MIRROR_TARBALLS = "1"
+
+DL_DIR ?= "${BSPDIR}/downloads/"
+TMPDIR = "${TOPDIR}/tmp"
+
+GCCVERSION = "5.4%"
+
+SDKMACHINE = "x86_64"
+
+WKS_FILE ?= "${IMGDEPLOYDIR}/${IMAGE_BASENAME}.wks"
+
+LICENSE_FLAGS_WHITELIST="commercial"
+
+WEBRTC_SRC_PATH = "${HOME}/dev/webrtc/webrtc-checkout/src"
+DEPOT_PATH = "${HOME}/dev/webrtc/depot_tools"
+
+PREFERRED_VERSION_libopus = "1.1.2"
+#PREFERRED_VERSION_u-boot ?= "v2018.05%"
+
+#PREFERRED_PROVIDER_virtual/kernel ?= "linux-stable"
+#PREFERRED_VERSION_linux-stable ?= "4.14%"
+
+# In case you need the rt-kernel uncomment the two lines below
+#PREFERRED_PROVIDER_virtual/kernel ?= "linux-stable-rt"
+#PREFERRED_VERSION_linux-stable-rt ?= "4.14%"
+
+#SSID = "YOUR_SSID"
+#PSK = YOUR_SSID_PASSWORD"
+
+# For debugging u-boot and kernel
+#RM_WORK_EXCLUDE += " linux-stable u-boot"
+
+# Add your custom config under this line
+BB_NUMBER_THREADS = "8"
