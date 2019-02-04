@@ -123,7 +123,7 @@ python do_write_toolchain_file () {
 addtask do_write_toolchain_file before do_compile
 
 do_compile( ) {
-    export PATH=${DEPOT_PATH}:$PATH 
+    export PATH=${DEPOT_TOOLS_PATH}:$PATH 
     cd ${EXTERNALSRC}
 
     if [ -d "third_party/flac" ]; then

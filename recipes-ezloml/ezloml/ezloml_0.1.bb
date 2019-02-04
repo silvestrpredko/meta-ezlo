@@ -9,8 +9,8 @@ LICENSE_FLAGS += "commercial"
 inherit pkgconfig cmake 
 inherit externalsrc 
 
-EXTERNALSRC_pn-${PN} = "${HOME}/dev/ezloml_dev/ezloml"
-EXTERNALSRC_BUILD_pn-${PN} = "${HOME}/dev/ezloml_dev/ezloml/build"
+EXTERNALSRC_pn-${PN} = "${EZLOML_SRC_PATH}"
+EXTERNALSRC_BUILD_pn-${PN} = "${EZLOML_SRC_PATH}/build"
 
 EXTRA_OECMAKE += "-DPC_BUILD=OFF -DWEBRTC_SRC_PATH=${WEBRTC_SRC_PATH}"
 
@@ -33,8 +33,6 @@ DEPENDS += " \
     openblas \
     virtual/egl \
 "
-#lapack
-
 
 do_configure_append() {
     rm -f ${STAGING_DIR_TARGET}/usr/include/openssl/*
