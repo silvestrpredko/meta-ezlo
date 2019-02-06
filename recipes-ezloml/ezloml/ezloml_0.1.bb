@@ -32,6 +32,7 @@ DEPENDS += " \
     gperftools \
     openblas \
     virtual/egl \
+    virtual/libgles2 \
 "
 
 do_configure_append() {
