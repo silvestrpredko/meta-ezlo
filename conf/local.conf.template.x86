@@ -1,5 +1,6 @@
 # Common configuration for all Machine types
-MACHINE = 'orange-pi-plus2'
+AUTHOR = "Dimitris Tassopoulos"
+MACHINE = 'qemux86-64'
 DISTRO = "poky"
 
 PACKAGE_CLASSES ?= " package_deb"
@@ -8,7 +9,7 @@ CONF_VERSION = "1"
 
 INHERIT += " rm_work"
 
-MACHINE_FEATURES_remove = " qemu-usermode"
+#MACHINE_FEATURES_remove = " qemu-usermode"
 DISTRO_FEATURES_remove = " \
     acl alsa argp bluetooth irda  largafile ext2 \ 
     largefile xattr \
@@ -19,20 +20,22 @@ DISTRO_FEATURES_append = " x11 opengl"
 
 BB_GENERATE_MIRROR_TARBALLS = "1"
 
-DL_DIR ?= "${BSPDIR}/downloads/"
+DL_DIR ?= "/home/iurii/dev/sunx_build/downloads"
 TMPDIR = "${TOPDIR}/tmp"
 
-GCCVERSION = "5.4%"
+GCCVERSION = "7.3%"
 
 SDKMACHINE = "x86_64"
 
 LICENSE_FLAGS_WHITELIST="commercial"
 
 # Webrtc tools and path to sources
-WEBRTC_SRC_PATH ?= ""
-DEPOT_TOOLS_PATH ?= ""
+WEBRTC_SRC_PATH = '/home/iurii/dev/webrtc/webrtc-checkout/src'
+DEPOT_TOOLS_PATH = '/home/iurii/dev/webrtc/depot_tools'
 
 # path to ezloml sources
-EZLOML_SRC_PATH ?= ""
+EZLOML_SRC_PATH = '/home/iurii/dev/ezloml_dev/ezloml'
 
 PREFERRED_VERSION_libopus = "1.1.2"
+BB_NUMBER_THREADS = "8"
+PARALLEL_MAKE = "-j 8"

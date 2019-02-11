@@ -24,6 +24,7 @@ inherit lib_package pkgconfig perlnative
 
 X264_DISABLE_ASM = ""
 X264_DISABLE_ASM_x86 = "--disable-asm"
+X264_DISABLE_ASM_x86-64 = "--disable-asm"
 X264_DISABLE_ASM_armv4 = "--disable-asm"
 X264_DISABLE_ASM_armv5 = "--disable-asm"
 X264_DISABLE_ASM_powerpc = "${@bb.utils.contains("TUNE_FEATURES", "spe", "--disable-asm", "", d)}"

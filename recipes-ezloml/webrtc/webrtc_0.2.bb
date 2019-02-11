@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=ad296492125bc71530d06234d9bfebe0"
 inherit externalsrc
 
 EXTERNALSRC_pn-${PN} = "${WEBRTC_SRC_PATH}"
-EXTERNALSRC_BUILD_pn-${PN} = "${WEBRTC_SRC_PATH}/yocto_build"
+EXTERNALSRC_BUILD_pn-${PN} = "${WEBRTC_SRC_PATH}/${TARGET_SYS}-build"
 
 include gn-utils.inc
 include webrtc-unbundle.inc
@@ -70,8 +70,15 @@ GN_ARGS += ' \
         linux_use_bundled_binutils=false \
         target_cpu="${@gn_target_arch_name(d)}" \
         rtc_enable_protobuf=false \
-        is_debug=true \
 '
+
+GN_ARGS_append_x86-64 = ' \
+        rtc_use_h264=true \
+        is_debug=false \
+        strip_debug_info=true \
+        is_component_build=false \
+'
+
 # ARM builds need special additional flags (see ${S}/build/config/arm.gni).
 # If we do not pass |arm_arch| and friends to GN, it will deduce a value that
 # will then conflict with TUNE_CCARGS and CC.
@@ -132,6 +139,8 @@ do_compile( ) {
 
     gn gen --args='${GN_ARGS}' "${EXTERNALSRC_BUILD}"
     ninja -C "${EXTERNALSRC_BUILD}"
+    ninja -C "${EXTERNALSRC_BUILD}" builtin_audio_decoder_factory
+    ninja -C "${EXTERNALSRC_BUILD}" audio_decoder_isac_fix
 }
 
 do_install( ) {
