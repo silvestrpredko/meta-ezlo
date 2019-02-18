@@ -1,0 +1,50 @@
+diff --git a/pusher++/include/pusher++/client.hpp b/pusher++/include/pusher++/client.hpp
+index 69e7746..0b04034 100644
+--- a/pusher++/include/pusher++/client.hpp
++++ b/pusher++/include/pusher++/client.hpp
+@@ -162,6 +162,18 @@ namespace pusher
+             return filtered_events_.connect(event_name, std::forward<FuncT>(func));
+         }
+ 
++        template<typename FuncT>
++        void trigger(std::string const& channel, std::string const& event, std::string const& data,
++                FuncT func)
++        {
++            auto ev = std::make_shared< std::string >(detail::client::make_event( channel, event, data ) );
++            socket_.async_write(boost::asio::buffer( *ev ),
++                    [ev, func](auto ec, std::size_t bytes_transfered)
++                    { 
++                        func(ec);
++                    });
++        }
++
+     private:
+         auto subscribe(std::string const& channel, std::string const& token = "", std::string const& channelData = "")
+         {
+diff --git a/pusher++/include/pusher++/detail/client/write.hpp b/pusher++/include/pusher++/detail/client/write.hpp
+index 50922ae..cff2517 100644
+--- a/pusher++/include/pusher++/detail/client/write.hpp
++++ b/pusher++/include/pusher++/detail/client/write.hpp
+@@ -37,6 +37,22 @@ namespace pusher { namespace detail { namespace client
+         return {sub_buf.GetString(), sub_buf.GetSize()};
+     }
+ 
++    inline std::string make_event(std::string const& channel, std::string const& event, std::string const& data)
++    {
++        rapidjson::StringBuffer sub_buf;
++        rapidjson::Writer<rapidjson::StringBuffer> sub_writer(sub_buf);
++        sub_writer.StartObject();
++        sub_writer.String("channel");
++        sub_writer.String(channel.c_str());
++        sub_writer.String("event");
++        sub_writer.String(event.c_str( ));
++        sub_writer.String("data");
++        sub_writer.String(data.c_str());
++        sub_writer.EndObject();
++        return {sub_buf.GetString(), sub_buf.GetSize()};
++    }
++
++
+ }}} // pusher::detail::client
+ 
+ #endif // PUSHERPP_DETAIL_CLIENT_WRITE_HPP

@@ -1,11 +1,11 @@
 DESCRIPTION = "Modern, powerful open source C++ class libraries and frameworks for building network- and internet-based applications that run on desktop, server, mobile and embedded systems."
 LICENSE = "BSL-1.0"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=ad296492125bc71530d06234d9bfebe0"
+LIC_FILES_CHKSUM = "file://../LICENSE;md5=ad296492125bc71530d06234d9bfebe0"
 
 inherit externalsrc
 
 EXTERNALSRC_pn-${PN} = "${WEBRTC_SRC_PATH}"
-EXTERNALSRC_BUILD_pn-${PN} = "${WEBRTC_SRC_PATH}/${TARGET_SYS}-build"
+EXTERNALSRC_BUILD_pn-${PN} = "${WEBRTC_SRC_PATH}"
 
 include gn-utils.inc
 include webrtc-unbundle.inc
@@ -121,7 +121,7 @@ GN_ARGS_append_armv6 += 'arm_use_neon=false'
 
 python do_write_toolchain_file () {
     """Writes a BUILD.gn file for Yocto detailing its toolchains."""
-    toolchain_dir = d.expand("${EXTERNALSRC}/build/toolchain/yocto")
+    toolchain_dir = d.expand("${EXTERNALSRC}/../build/toolchain/yocto")
     bb.utils.mkdirhier(toolchain_dir)
     toolchain_file = os.path.join(toolchain_dir, "BUILD.gn")
     write_toolchain_file(d, toolchain_file)
@@ -131,7 +131,7 @@ addtask do_write_toolchain_file before do_compile
 
 do_compile( ) {
     export PATH=${DEPOT_TOOLS_PATH}:$PATH 
-    cd ${EXTERNALSRC}
+    cd ..
 
     if [ -d "third_party/flac" ]; then
         ./build/linux/unbundle/replace_gn_files.py --system-libraries ${GN_UNBUNDLE_LIBS}
@@ -150,12 +150,6 @@ do_install( ) {
 
     install -d ${D}${libdir}/webrtc/api/audio_codecs
     cp -r obj/api/audio_codecs/* ${D}${libdir}/webrtc/api/audio_codecs/
-
-    #install -d ${D}${libdir}/webrtc/api/video_codecs
-    #install -m 0644 obj/api/video_codecs/*.a ${D}${libdir}/webrtc/api/video_codecs/
-
-    #install -d ${D}${includedir}
-    #ln -s ${EXTERNALSRC} ${D}${includedir}/webrtc
 }
 
 do_package_qa[noexec] = "1"

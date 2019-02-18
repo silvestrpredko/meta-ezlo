@@ -23,7 +23,7 @@ do_compile () {
 		oe_runmake -C utest TARGET=ARMV8     \
                                 HOSTCC="${BUILD_CC}"                                         \ 
                                 NOFORTRAN=0 NO_LAPACK=1 USE_THREAD=0
-	elif [ ${DEFAULTTUNE} = "arm" ]; then
+	elif [ ${DEFAULTTUNE} = "armv7vethf-neon" ]; then
 	    oe_runmake TARGET=ARMV7     \
                                 HOSTCC="${BUILD_CC}"                                         \ 
 								AR="${TARGET_PREFIX}ar"                        \

@@ -83,9 +83,10 @@ EXTRA_OECMAKE_append_x86 = " -DX86=ON"
 
 EXTRA_OECMAKE_append = " -DBUILD_TESTS=OFF -DBUILD_opencv_apps=OFF -DBUILD_PERF_TESTS=OFF \
                          -DBUILD_SHARED_LIBS=OFF -DBUILD_ZLIB=ON -DBUILD_OPENEXR=ON \
-                         -DBUILD_ILMIMF=ON -DBUILD_TBB=ON -DBUILD_JASPER=ON \
+                         -DBUILD_ILMIMF=ON -DBUILD_TBB=ON -DBUILD_JASPER=ON -DBUILD_TBB=ON -DWITH_TBB=ON \
                          -DBUILD_PNG=ON -DBUILD_JPEG=ON -DBUILD_TIFF=ON -DBUILD_WEBP=ON \
 "
+EXTRA_OECMAKE_append_arm = " -DENABLE_NEON=ON -DENABLE_VFPV3=YES"
 
 PACKAGECONFIG ??= " jpeg png tiff \
     ${@bb.utils.contains("DISTRO_FEATURES", "x11", "gtk", "", d)} \
@@ -110,10 +111,10 @@ PACKAGECONFIG[png] = "-DWITH_PNG=ON,-DWITH_PNG=OFF,libpng,"
 PACKAGECONFIG[python2] = "-DPYTHON2_NUMPY_INCLUDE_DIRS:PATH=${STAGING_LIBDIR}/${PYTHON_DIR}/site-packages/numpy/core/include,,python-numpy,"
 PACKAGECONFIG[python3] = "-DPYTHON3_NUMPY_INCLUDE_DIRS:PATH=${STAGING_LIBDIR}/${PYTHON_DIR}/site-packages/numpy/core/include,,python3-numpy,"
 PACKAGECONFIG[samples] = "-DBUILD_EXAMPLES=ON -DINSTALL_PYTHON_EXAMPLES=ON,-DBUILD_EXAMPLES=OFF,,"
-PACKAGECONFIG[tbb] = "-DWITH_TBB=ON,-DWITH_TBB=OFF,tbb,"
 PACKAGECONFIG[text] = "-DBUILD_opencv_text=ON,-DBUILD_opencv_text=OFF,tesseract,"
 PACKAGECONFIG[tiff] = "-DWITH_TIFF=ON,-DWITH_TIFF=OFF,tiff,"
 PACKAGECONFIG[v4l] = "-DWITH_V4L=ON,-DWITH_V4L=OFF,v4l-utils,"
+#PACKAGECONFIG[tbb] = "-DWITH_TBB=ON,-DWITH_TBB=OFF,tbb,"
 
 inherit pkgconfig cmake
 

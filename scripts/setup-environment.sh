@@ -60,14 +60,14 @@ export PATH="$(echo $PATH | sed 's/\(:.\|:\)*:/:/g;s/^.\?://;s/:.\?$//')"
 if [ ! -e conf/local.conf.sample ]; then
 
     # Replace conf/bblayers.conf and conf/local.conf with the platform's ones
-    cp -f $CWD/meta-sources/${METALAYER}/conf/bblayers.conf.template $CWD/$1/conf/bblayers.conf
-    cp -f $CWD/meta-sources/${METALAYER}/conf/local.conf.template $CWD/$1/conf/local.conf
+    cp -f $CWD/meta-sources/${METALAYER}/conf/bblayers.conf.${MACHINE} $CWD/$1/conf/bblayers.conf
+    cp -f $CWD/meta-sources/${METALAYER}/conf/local.conf.${MACHINE} $CWD/$1/conf/local.conf
 
     # Change settings according environment
     sed -e "s,MACHINE ?=.*,MACHINE = '$MACHINE',g" -i conf/local.conf
-    sed -e "s,WEBRTC_SRC_PATH ?=.*,WEBRTC_SRC_PATH = '$WEBRTC_SRC_PATH',g" -i conf/local.conf
     sed -e "s,DEPOT_TOOLS_PATH ?=.*,DEPOT_TOOLS_PATH = '$DEPOT_TOOLS_PATH',g" -i conf/local.conf
-    sed -e "s,EZLOML_SRC_PATH ?=.*,EZLOML_SRC_PATH = '$EZLOML_SRC_PATH',g" -i conf/local.conf
+    sed -e "s,WEBRTC_SRC_PATH ?=.*,WEBRTC_SRC_PATH = '$WEBRTC_SRC_PATH/$MACHINE',g" -i conf/local.conf
+    sed -e "s,EZLOML_SRC_PATH ?=.*,EZLOML_SRC_PATH = '$EZLOML_SRC_PATH/$MACHINE',g" -i conf/local.conf
 
     # Append in conf the number of cpus
     cat >> conf/local.conf <<EOF

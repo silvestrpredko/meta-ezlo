@@ -15,6 +15,7 @@ SRCREV = "${AUTOREV}"
 SRC_URI = " \
         git://github.com/BenPope/pusher-cpp.git;branch=master;protocol=http \
         file://0001-add-ssl-support.patch \
+        file://0002-add-client-trigger-api.patch \
 "
 
 SRC_URI[md5sum] = "d41d8cd98f00b204e9800998ecf8427e"
