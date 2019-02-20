@@ -2,7 +2,10 @@ DESCRIPTION = "libvdpau-sunxi is a [VDPAU] backend driver for Allwinner based (s
 LICENSE = "MIT"
 
 SRCREV = "${AUTOREV}"
-SRC_URI = "git://github.com/linux-sunxi/libvdpau-sunxi.git;branch=master;protocol=http"
+SRC_URI = " \
+            git://github.com/linux-sunxi/libvdpau-sunxi.git;branch=master;protocol=http \
+            file://0001-enable-debug-print-via-define.patch \
+"
 SRC_URI[md5sum] = "fcc5bb28449634fc36ab5e3e7942037f"
 LIC_FILES_CHKSUM = "file://README.md;md5=441836d5bd448b57321a6ca1407bee17"
 S = "${WORKDIR}/git"

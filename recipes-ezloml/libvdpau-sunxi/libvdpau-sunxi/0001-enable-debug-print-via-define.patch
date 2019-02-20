@@ -1,0 +1,12 @@
+diff --git a/vdpau_private.h b/vdpau_private.h
+index 945c715..9eabc7c 100644
+--- a/vdpau_private.h
++++ b/vdpau_private.h
+@@ -20,7 +20,6 @@
+ #ifndef __VDPAU_PRIVATE_H__
+ #define __VDPAU_PRIVATE_H__
+ 
+-#define DEBUG
+ #define MAX_HANDLES 64
+ #define VBV_SIZE (1 * 1024 * 1024)
+ 
