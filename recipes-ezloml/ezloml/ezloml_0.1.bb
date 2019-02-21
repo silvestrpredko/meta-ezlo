@@ -40,7 +40,7 @@ DEPENDS += " \
     virtual/libgles2 \
 "
 
-DEPENDS_append_class-target += "libvdpau-sunxi"
+DEPENDS_append_arm = " libvdpau-sunxi"
 
 EXTRA_OECMAKE_append = " .."  
 
@@ -49,7 +49,10 @@ do_configure_append() {
     cp ${STAGING_DIR_TARGET}/usr/lib/boringssl/include/openssl/* ${STAGING_DIR_TARGET}/usr/include/openssl/
 }
 
-do_install_arm() {
-    cp ${STAGING_DIR_TARGET}/usr/lib/vdpau/libvdpau_sunxi.so ${EXTERNALSRC} 
+do_install() {
+    if [ -e ${STAGING_DIR_TARGET}/usr/lib/vdpau/libvdpau_sunxi.so ];
+    then
+        cp ${STAGING_DIR_TARGET}/usr/lib/vdpau/libvdpau_sunxi.so ${EXTERNALSRC} 
+    fi
 }
 
