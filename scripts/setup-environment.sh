@@ -34,6 +34,7 @@ fi
 
 # Check the machine type specified
 LIST_MACHINES=$(ls -1 $CWD/meta-sources/*/conf/machine | grep -F ".conf" | sed s/\.conf//g)
+LIST_MACHINES=$(ls -1 $CWD/meta-sources/*/*/conf/machine | grep -F ".conf" | sed s/\.conf//g)${LIST_MACHINES}
 VALID_MACHINE=$(echo -e "$LIST_MACHINES" | grep ${MACHINE} | wc -l )
 if [ "x$MACHINE" = "x" ] || [ "$VALID_MACHINE" = "0" ]; then
     echo -e "\nThe \$MACHINE you have specified ($MACHINE) is not supported by this build setup"

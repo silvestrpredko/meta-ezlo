@@ -1,5 +1,4 @@
 # Common configuration for all Machine types
-AUTHOR = "Dimitris Tassopoulos"
 MACHINE = 'genericx86-64'
 DISTRO = "poky"
 
@@ -19,7 +18,7 @@ DISTRO_FEATURES_remove = " \
 DISTRO_FEATURES_append = " x11 opengl"
 BB_GENERATE_MIRROR_TARBALLS = "1"
 
-DL_DIR ?= "/home/iurii/dev/sunx_build/downloads"
+DL_DIR ?= "${HOME}/oe-downloads"
 TMPDIR = "${TOPDIR}/tmp"
 
 GCCVERSION = "5.4%"
@@ -29,11 +28,11 @@ SDKMACHINE = "x86_64"
 LICENSE_FLAGS_WHITELIST="commercial"
 
 # Webrtc tools and path to sources
-WEBRTC_SRC_PATH = '/home/iurii/dev/webrtc/webrtc-checkout/src'
-DEPOT_TOOLS_PATH = '/home/iurii/dev/webrtc/depot_tools'
+WEBRTC_SRC_PATH ?= ""
+DEPOT_TOOLS_PATH ?= ""
 
 # path to ezloml sources
-EZLOML_SRC_PATH = '/home/iurii/dev/ezloml_dev/ezloml'
+EZLOML_SRC_PATH ?= ""
 
 PREFERRED_VERSION_libopus = "1.1.2"
 BB_NUMBER_THREADS = "8"
