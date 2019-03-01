@@ -70,13 +70,13 @@ GN_ARGS += ' \
         linux_use_bundled_binutils=false \
         target_cpu="${@gn_target_arch_name(d)}" \
         rtc_enable_protobuf=false \
+        is_component_build=false \
+        enable_iterator_debugging=false \
 '
 
 GN_ARGS_append_x86-64 = ' \
         rtc_use_h264=true \
         is_debug=false \
-        strip_debug_info=true \
-        is_component_build=false \
 '
 
 # ARM builds need special additional flags (see ${S}/build/config/arm.gni).
