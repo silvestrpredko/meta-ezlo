@@ -19,10 +19,10 @@ DISTRO_FEATURES_append = " x11 opengl"
 
 BB_GENERATE_MIRROR_TARBALLS = "1"
 
-DL_DIR ?= "${BSPDIR}/downloads/"
+DL_DIR ?= "${HOME}/oe-downloads/"
 TMPDIR = "${TOPDIR}/tmp"
 
-GCCVERSION = "5.4%"
+GCCVERSION = "6.4%"
 
 SDKMACHINE = "x86_64"
 
