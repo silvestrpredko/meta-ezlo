@@ -1,0 +1,46 @@
+# Common configuration for all Machine types
+MACHINE = 'sun8i'
+DISTRO = "poky"
+
+DISTRO_FEATURES_remove = " irda usbgadget nfs bluetooth 3g"
+DISTRO_FEATURES_append = " package-manager x11"
+
+BB_GENERATE_MIRROR_TARBALLS = "1"
+
+DL_DIR ?= "${HOME}/oe-downloads/"
+TMPDIR = "${TOPDIR}/tmp"
+
+PACKAGE_CLASSES = "package_ipk"
+
+# i686 or x86_64
+SDKMACHINE = "x86_64"
+
+CORE_IMAGE_EXSTRA_INSTALL = "packagegroup-core-x11-base sunxi-mali-test ezloml seeta-face-engine-models"
+# for no root passwd uncomment the following and comment the two extra user lines
+EXTRA_IMAGE_FEATURES = "debug-tweaks"
+
+# for a root passwd, change jumpnowtek below to your password
+#INHERIT += "extrausers"
+#EXTRA_USERS_PARAMS = "usermod -P jnjnuhjn root; "
+
+# this will force root to change password on first login
+#INHERIT += "chageusers"
+#CHAGE_USERS_PARAMS = "chage -d0 root; "
+
+PATCHRESOLVE = "noop"
+RM_OLD_IMAGE = "1"
+INHERIT += "rm_work"
+CONF_VERSION = "1"
+
+LICENSE_FLAGS_WHITELIST += "commercial"
+
+# Webrtc tools and path to sources
+WEBRTC_SRC_PATH = '/home/iurii/dev/webrtc/webrtc-checkout/src/${MACHINE}'
+DEPOT_TOOLS_PATH = '/home/iurii/dev/webrtc/depot_tools'
+
+# path to ezloml sources
+EZLOML_SRC_PATH = '/home/iurii/dev/ezloml_dev/ezloml_master/${MACHINE}'
+
+#PREFERRED_PROVIDER_virtual/kernel = "linux-armbian"
+BB_NUMBER_THREADS = "8"
+PARALLEL_MAKE = "-j 8"
