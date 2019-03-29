@@ -15,7 +15,7 @@ setenv docker_optimizations "on"
 setenv devnum "0"
 setenv rootdev "/dev/mmcblk${devnum}p2"
 setenv consoleargs "console=ttyS0,115200 console=tty1"
-setenv bootargs "${bootargs} usb-storage.quirks=0x2537:0x1066:u,0x2537:0x1068:u cma=96M cgroup_enable=memory swapaccount=1"
+setenv boardargs "usb-storage.quirks=0x2537:0x1066:u,0x2537:0x1068:u cma=96M cgroup_enable=memory swapaccount=1"
 
 # Print boot source
 itest.b *0x28 == 0x00 && echo "U-boot loaded from SD"
@@ -37,7 +37,7 @@ if test -e ${devtype} ${devnum} ${prefix}armbianEnv.txt; then
 	env import -t ${load_addr} ${filesize}
 fi
 
-setenv bootargs "root=${rootdev} rootwait rootfstype=${rootfstype} ${consoleargs} hdmi.audio=EDID:0 disp.screen0_output_mode=${disp_mode} panic=10 consoleblank=0 loglevel=${verbosity}"
+setenv bootargs "root=${rootdev} rootwait rootfstype=${rootfstype} ${consoleargs} hdmi.audio=EDID:0 disp.screen0_output_mode=${disp_mode} panic=10 consoleblank=0 loglevel=${verbosity} ${boardargs}"
 
 load ${devtype} ${devnum} ${kernel_addr_r} ${prefix}uImage
 
