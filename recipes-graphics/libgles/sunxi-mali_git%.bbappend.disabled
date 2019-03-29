@@ -1,0 +1,8 @@
+SRC_URI = "gitsm://github.com/linux-sunxi/sunxi-mali.git;branch=master \
+           file://0001-Add-EGLSyncKHR-EGLTimeKHR-and-GLChar-definition.patch \
+           file://0002-Add-missing-GLchar-definition.patch \
+           file://0003-Fix-sed-to-replace-by-the-correct-var.patch \
+           file://0001-fix-test-build.patch \
+           "
+
+DEPENDS := "${@'${DEPENDS}'.replace('dri2proto', 'xorgproto')}"

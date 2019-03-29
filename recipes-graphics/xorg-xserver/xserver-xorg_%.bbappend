@@ -1,0 +1,1 @@
+PACKAGECONFIG := "${@'${PACKAGECONFIG}'.replace('glamor', ' ')}"

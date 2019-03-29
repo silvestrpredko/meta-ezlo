@@ -21,7 +21,6 @@ DEPENDS += " \
     glib-2.0 \
     gtk+3 \
     jpeg \
-    libdrm \
     libwebp \
     libxml2 \
     libxslt \
@@ -30,11 +29,6 @@ DEPENDS += " \
     ${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)} \
     virtual/egl \
     virtual/libgl \
-"
-REQUIRED_DISTRO_FEATURES = "x11 opengl"
-
-DEPENDS += "\
-        libx11 \
 "
 
 PACKAGECONFIG ??= "use-egl"
@@ -48,6 +42,7 @@ PACKAGECONFIG[use-egl] = ",,virtual/egl virtual/libgles2"
 # let Yocto handle everything.
 GN_ARGS += "use_sysroot=false"
 
+GN_ARGS += "use_gtk=false"
 # Upstream Chromium uses clang on Linux, and GCC is not regularly tested. This
 # means new GCC releases can introduce build failures as Chromium uses "-Wall
 # -Werror" by default and we do not have much control over which warnings GCC

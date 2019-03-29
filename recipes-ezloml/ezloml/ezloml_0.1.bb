@@ -40,19 +40,13 @@ DEPENDS += " \
     virtual/libgles2 \
 "
 
-DEPENDS_append_arm = " libvdpau-sunxi"
+DEPENDS_append_arm = " libvdpau-sunxi libcedrus"
 
+RDEPENDS_${PN} += "libGLESv2.so libEGL.so"
 EXTRA_OECMAKE_append = " .."  
 
 do_configure_append() {
     rm -f ${STAGING_DIR_TARGET}/usr/include/openssl/*
     cp ${STAGING_DIR_TARGET}/usr/lib/boringssl/include/openssl/* ${STAGING_DIR_TARGET}/usr/include/openssl/
-}
-
-do_install() {
-    if [ -e ${STAGING_DIR_TARGET}/usr/lib/vdpau/libvdpau_sunxi.so ];
-    then
-        cp ${STAGING_DIR_TARGET}/usr/lib/vdpau/libvdpau_sunxi.so ${EXTERNALSRC} 
-    fi
 }
 
