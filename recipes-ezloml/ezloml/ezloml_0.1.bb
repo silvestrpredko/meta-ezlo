@@ -42,7 +42,8 @@ DEPENDS += " \
 
 DEPENDS_append_arm = " libvdpau-sunxi libcedrus"
 
-RDEPENDS_${PN} += "libGLESv2.so libEGL.so"
+RDEPENDS_${PN} += "libvdpau-sunxi sunxi-mali"
+
 EXTRA_OECMAKE_append = " .."  
 
 do_configure_append() {
