@@ -35,11 +35,11 @@ CONF_VERSION = "1"
 LICENSE_FLAGS_WHITELIST += "commercial"
 
 # Webrtc tools and path to sources
-WEBRTC_SRC_PATH = '/home/iurii/dev/webrtc/webrtc-checkout/src/${MACHINE}'
-DEPOT_TOOLS_PATH = '/home/iurii/dev/webrtc/depot_tools'
+WEBRTC_SRC_PATH ?= "" 
+DEPOT_TOOLS_PATH ?= ""
 
 # path to ezloml sources
-EZLOML_SRC_PATH = '/home/iurii/dev/ezloml_dev/ezloml_master/${MACHINE}'
+EZLOML_SRC_PATH ?= ""
 
 #PREFERRED_PROVIDER_virtual/kernel = "linux-armbian"
 BB_NUMBER_THREADS = "8"

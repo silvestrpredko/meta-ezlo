@@ -19,8 +19,8 @@ do_compile() {
 }
 
 do_install() {
-    oe_runmake install 'DESTDIR=${D}/'
+    install -d ${D}${libdir}
+    install -m 0644 ${B}/libvdpau_sunxi.so.1 ${D}${libdir}/
+    ln -sf libvdpau_sunxi.so.1 ${D}${libdir}/libvdpau_sunxi.so
 }
 
-#FILES_${PN} += "${libdir}/vdpau/*.so*" 
-FILES_${PN}-dev += "${libdir}/vdpau/*.so*" 

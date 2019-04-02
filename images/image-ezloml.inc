@@ -93,6 +93,5 @@ CORE_OS = " \
     packagegroup-core-x11-base \
     sudo \
     ca-certificates \
-    resize-rootfs \
 "
 
