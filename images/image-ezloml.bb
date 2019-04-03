@@ -8,6 +8,7 @@ IMAGE_INSTALL_append = " \
     ${EZLOML_STUFF} \
     ${DEV_SDK_INSTALL} \
     zram \
+    resize-rootfs \
 "
 
 export IMAGE_BASENAME = "image-ezloml"

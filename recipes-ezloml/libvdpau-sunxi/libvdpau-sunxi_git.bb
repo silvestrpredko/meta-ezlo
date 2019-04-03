@@ -24,3 +24,4 @@ do_install() {
     ln -sf libvdpau_sunxi.so.1 ${D}${libdir}/libvdpau_sunxi.so
 }
 
+FILES_${PN} += "${libdir}/lib*so*"

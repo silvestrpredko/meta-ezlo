@@ -50,7 +50,7 @@ case "$1" in
 
     echo "Expanding rootfs..."
 
-    if do_expand_rootfs  ;
+    :X
     then
       echo "Expanding partition success"
     else
