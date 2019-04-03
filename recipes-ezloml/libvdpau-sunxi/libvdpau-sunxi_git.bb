@@ -19,8 +19,12 @@ do_compile() {
 }
 
 do_install() {
-    install -d ${D}${libdir}
+    install -d 0755 ${D}${libdir}
     install -m 0644 ${B}/libvdpau_sunxi.so.1 ${D}${libdir}/
     ln -sf libvdpau_sunxi.so.1 ${D}${libdir}/libvdpau_sunxi.so
 }
+
+FILES_SOLIBSDEV = ""
+INSANE_SKIP_${PN} += "dev-so"
+FILES_${PN} += "${libdir}/*.so"
 

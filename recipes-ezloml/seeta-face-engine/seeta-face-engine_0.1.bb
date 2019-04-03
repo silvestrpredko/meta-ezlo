@@ -35,8 +35,6 @@ do_install() {
     install -d ${D}${libdir}
     install -d ${D}${includedir}
     install -d ${D}${includedir}/seeta
-    install -d ${D}${datadir}/seeta/FaceDetection/model/
-    install -d ${D}${datadir}/seeta/FaceAlignment/model/
 
     cd ${B}/FaceDetection
     cp *.a ${D}${libdir}
@@ -50,13 +48,16 @@ do_install() {
     cp *.a ${D}${libdir}
     cp -r ${S}/FaceIdentification/include/* ${D}${includedir}/seeta
 
-    cp ${S}/FaceDetection/model/seeta_fd_frontal_v1.0.bin ${D}${datadir}/seeta/FaceDetection/model/
-    cp ${S}/FaceAlignment/model/seeta_fa_v1.1.bin ${D}${datadir}/seeta/FaceAlignment/model/
+    install -d ${D}${datadir}/seeta/SeetaFaceEngine/
+    install -d ${D}${datadir}/seeta/SeetaFaceEngine/FaceDetection/model/
+    install -d ${D}${datadir}/seeta/SeetaFaceEngine/FaceAlignment/model/
+    cp ${S}/FaceDetection/model/seeta_fd_frontal_v1.0.bin ${D}${datadir}/seeta/SeetaFaceEngine/FaceDetection/model/
+    cp ${S}/FaceAlignment/model/seeta_fa_v1.1.bin ${D}${datadir}/seeta/SeetaFaceEngine/FaceAlignment/model/
 }
 
 PACKAGES =+ "${PN}-models"
 
 FILES_${PN}-models = " \
-    ${datadir}/seeta/FaceDetection/model/seeta_fd_frontal_v1.0.bin \
-    ${datadir}/seeta/FaceAlignment/model/seeta_fa_v1.1.bin \
+    ${datadir}/seeta/SeetaFaceEngine/FaceDetection/model/seeta_fd_frontal_v1.0.bin \
+    ${datadir}/seeta/SeetaFaceEngine/FaceAlignment/model/seeta_fa_v1.1.bin \
 "

@@ -8,6 +8,8 @@ IMAGE_INSTALL_append = " \
     ${EZLOML_STUFF} \
     ${DEV_SDK_INSTALL} \
     zram \
+    e2fsprogs-mke2fs \
+    dosfstools \
 "
 
 export IMAGE_BASENAME = "image-ezloml"
