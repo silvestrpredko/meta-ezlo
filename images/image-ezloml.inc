@@ -84,7 +84,15 @@ WIFI_SUPPORT = " \
 EZLOML_STUFF = " \
     ezloml \ 
     seeta-face-engine-models \
+"
+
+SYSTEM_TUNING_SERVICES = " \
     resize-rootfs \
+    udev-rules-custom \
+    ksz9897-fix \
+    sd2emmc \
+    zram \    
+    cpufreq-performance \
 "
 
 CORE_OS = " \
@@ -92,7 +100,7 @@ CORE_OS = " \
     openssh openssh-keygen openssh-sftp-server \
     packagegroup-core-boot \
     packagegroup-core-x11-base \
-    sudo \
     ca-certificates \
+    ${SYSTEM_TUNING_SERVICES} \
 "
 

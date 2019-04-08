@@ -13,7 +13,7 @@ do_expand_rootfs(){
       echo "/dev/disk/by-label/rootfs is not the last partition. Don't know how to expand"
       return 4
     fi
-
+    
     # Get the starting offset of the root partition
     PART_START=$(parted ${BASE_DEV} -ms unit s p | grep "^${PART_NUM}" | cut -f 2 -d:)
     # Remove suffix:
@@ -46,18 +46,15 @@ EOF
 
 case "$1" in
   start)
-    reboot=false
-
     echo "Expanding rootfs..."
 
     if do_expand_rootfs  ;
     then
+      update-rc.d -f resize-rootfs remove >/dev/null 2>&1
       echo "Expanding partition success"
     else
       echo "Expanding rootfs has failed, see log files. Error code: $?"
     fi
-
-    update-rc.d -f resize-rootfs remove >/dev/null 2>&1
 
   ;;
 

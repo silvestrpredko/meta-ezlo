@@ -3,7 +3,6 @@
 # Please edit /boot/armbianEnv.txt to set supported parameters
 #
 
-setenv load_addr "0x44000000"
 setenv overlay_error "false"
 # default values
 setenv verbosity "7"
@@ -13,7 +12,7 @@ setenv disp_mode "1920x1080p60"
 setenv rootfstype "ext4"
 setenv docker_optimizations "on"
 setenv devnum "0"
-setenv rootdev "/dev/mmcblk${devnum}p2"
+setenv rootdev "/dev/mmcblk0p2"
 setenv consoleargs "console=ttyS0,115200 console=tty1"
 setenv boardargs "usb-storage.quirks=0x2537:0x1066:u,0x2537:0x1068:u cma=96M cgroup_enable=memory swapaccount=1"
 
@@ -27,22 +26,15 @@ itest.b *0x28 == 0x03 && echo "U-boot loaded from SPI"
 if test "${devtype}" = "mmc"; then
   part uuid mmc ${devnum}:1 partuuid;
   setenv devnum ${mmc_bootdev}
-  setenv rootdev "/dev/mmcblk${mmc_bootdev}p2"
 fi
 
 echo "Boot script loaded from ${devtype}"
 
-if test -e ${devtype} ${devnum} ${prefix}armbianEnv.txt; then
-	load ${devtype} ${devnum} ${load_addr} ${prefix}armbianEnv.txt
-	env import -t ${load_addr} ${filesize}
-fi
-
 setenv bootargs "root=${rootdev} rootwait rootfstype=${rootfstype} ${consoleargs} hdmi.audio=EDID:0 disp.screen0_output_mode=${disp_mode} panic=10 consoleblank=0 loglevel=${verbosity} ${boardargs}"
 
-load ${devtype} ${devnum} ${kernel_addr_r} ${prefix}uImage
-
 echo "Found legacy kernel configuration"
-load ${devtype} ${devnum} ${fdt_addr_r} ${prefix}script.bin
+load ${devtype} ${devnum} ${fdt_addr_r} script.bin 
+load ${devtype} ${devnum} ${kernel_addr_r} uImage
 bootm ${kernel_addr_r}
 
 # Recompile with:

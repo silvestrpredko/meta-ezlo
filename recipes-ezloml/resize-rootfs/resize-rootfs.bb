@@ -11,8 +11,8 @@ INITSCRIPT_PARAMS = "start 90 S ."
 RDEPENDS_${PN} = "e2fsprogs-resize2fs parted"
 
 do_install () {
-        install -d ${D}${INIT_D_DIR}
-        install -m 0755 ${WORKDIR}/${INITSCRIPT_NAME} ${D}/${INIT_D_DIR}/${INITSCRIPT_NAME}
+    install -d ${D}${INIT_D_DIR}
+    install -m 0755 ${WORKDIR}/${INITSCRIPT_NAME} ${D}/${INIT_D_DIR}/${INITSCRIPT_NAME}
 }
 
 FILES_${PN} = "${INIT_D_DIR}/${INITSCRIPT_NAME}"

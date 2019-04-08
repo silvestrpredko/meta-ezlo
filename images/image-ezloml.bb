@@ -1,4 +1,7 @@
-SUMMARY = "A base console ezloml image"
+SUMMARY = "A minimal ezloml image"
+
+IMAGE_FEATURES += "package-management x11-base"
+IMAGE_LINGUAS = "en-us"
 
 inherit core-image distro_features_check
 require image-ezloml.inc
@@ -6,10 +9,6 @@ require image-ezloml.inc
 IMAGE_INSTALL_append = " \
     ${CORE_OS} \
     ${EZLOML_STUFF} \
-    ${DEV_SDK_INSTALL} \
-    zram \
-    e2fsprogs-mke2fs \
-    dosfstools \
 "
 
 export IMAGE_BASENAME = "image-ezloml"
