@@ -19,7 +19,6 @@ def gn_host_arch_name(d):
         if re.match(arch_regexp, build_arch):
             return gn_arch_name
     bb.fatal('Unsuported BUILD_ARCH value: "%s"' % build_arch)
-
 # GN target architecture helpers.
 #
 # Determining the target architecture is more difficult, as there are many
@@ -32,11 +31,9 @@ GN_TARGET_ARCH_NAME_aarch64 = "arm64"
 GN_TARGET_ARCH_NAME_arm = "arm"
 GN_TARGET_ARCH_NAME_x86 = "x86"
 GN_TARGET_ARCH_NAME_x86-64 = "x64"
-
 BUILD_CC_toolchain-clang = "clang"
 BUILD_CXX_toolchain-clang = "clang++"
 BUILD_LD_toolchain-clang = "clang"
-
 # knob for clang, when using meta-clang to provide clang and case where
 # clang happens to be default compiler for OE we should let it use clang
 def is_default_cc_clang(d):
@@ -46,11 +43,9 @@ def is_default_cc_clang(d):
     if toolchain == "clang" and "toolchain-clang" in overrides.split(":"):
         return "true"
     return "false"
-
 def clang_install_path(d):
     """Return clang compiler install path."""
     return d.getVar("STAGING_BINDIR_NATIVE")
-
 def gn_target_arch_name(d):
     """Returns a GN architecture name corresponding to the target machine's
     architecture."""
@@ -59,7 +54,6 @@ def gn_target_arch_name(d):
         bb.fatal('Unsupported target architecture. A valid override for the '
                  'GN_TARGET_ARCH_NAME variable could not be found.')
     return name
-
 def write_toolchain_file(d, file_path):
     """Creates a complete GN toolchain file in |file_path|."""
     import string
@@ -84,7 +78,6 @@ def write_toolchain_file(d, file_path):
         '  }\n'
         '}\n'
     )
-
     native_toolchain = {
         'toolchain_name': 'yocto_native',
         'current_cpu': gn_host_arch_name(d),
@@ -115,7 +108,6 @@ def write_toolchain_file(d, file_path):
         'is_clang': is_default_cc_clang(d),
         'clang_base_path': clang_install_path(d),
     }
-
     with open(file_path, 'w') as toolchain_file:
         toolchain_file.write(
             '# This file has been generated automatically.\n'

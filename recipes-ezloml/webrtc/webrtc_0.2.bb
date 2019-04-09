@@ -53,6 +53,11 @@ GN_ARGS += "use_sysroot=false"
 # -Werror" by default and we do not have much control over which warnings GCC
 # decides to include in -Wall.
 GN_ARGS += "treat_warnings_as_errors=false"
+GN_ARGS += "rtc_include_tests=false"
+GN_ARGS += "is_chrome_branded=false"
+
+# By default webrtc don't use rtti
+GN_ARGS += "use_rtti=true"
 
 # Starting with M61, Chromium defaults to building with its own copy of libc++
 # instead of the system's libstdc++. Explicitly disable this behavior.
@@ -119,6 +124,22 @@ GN_ARGS_append_armv6 += 'use_allocator="none"'
 # https://bugs.chromium.org/p/webrtc/issues/detail?id=6574
 GN_ARGS_append_armv6 += 'arm_use_neon=false'
 
+export BRANCH_72="(HEAD detached at branch-heads/72)"
+
+do_check_webrtc_branch() {
+    PREV_DIR=$(pwd)
+    cd ${WEBRTC_SRC_PATH}
+    cd ..
+    BRANCH="$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')"
+
+    if [ "$BRANCH" != "$BRANCH_72" ]
+    then
+        bbfatal "Please checkout to ${BRANCH}"
+    fi
+
+    cd ${PREV_DIR}
+}
+
 python do_write_toolchain_file () {
     """Writes a BUILD.gn file for Yocto detailing its toolchains."""
     toolchain_dir = d.expand("${EXTERNALSRC}/../build/toolchain/yocto")
@@ -128,6 +149,7 @@ python do_write_toolchain_file () {
 }
 
 addtask do_write_toolchain_file before do_compile
+addtask do_check_webrtc_branch before do_configure
 
 do_compile( ) {
     export PATH=${DEPOT_TOOLS_PATH}:$PATH 
@@ -139,14 +161,11 @@ do_compile( ) {
 
     gn gen --args='${GN_ARGS}' "${EXTERNALSRC_BUILD}"
     ninja -C "${EXTERNALSRC_BUILD}"
-    ninja -C "${EXTERNALSRC_BUILD}" builtin_audio_decoder_factory
-    ninja -C "${EXTERNALSRC_BUILD}" audio_decoder_isac_fix
 }
 
 do_install( ) {
     install -d ${D}${libdir}/webrtc
     install -m 0644 obj/libwebrtc.a ${D}${libdir}/webrtc
-    install -m 0644 obj/libwebrtc_common.a ${D}${libdir}/webrtc
 
     install -d ${D}${libdir}/webrtc/api/audio_codecs
     cp -r obj/api/audio_codecs/* ${D}${libdir}/webrtc/api/audio_codecs/
