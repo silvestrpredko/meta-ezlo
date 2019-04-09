@@ -84,6 +84,7 @@ WIFI_SUPPORT = " \
 EZLOML_STUFF = " \
     ezloml \ 
     seeta-face-engine-models \
+    node-camera-search \
 "
 
 SYSTEM_TUNING_SERVICES = " \

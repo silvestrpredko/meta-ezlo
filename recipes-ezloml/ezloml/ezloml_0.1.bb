@@ -8,6 +8,7 @@ LICENSE_FLAGS += "commercial"
 
 inherit pkgconfig cmake 
 inherit externalsrc 
+#inherit npm-install
 
 EXTERNALSRC_pn-${PN} = "${EZLOML_SRC_PATH}"
 EXTERNALSRC_BUILD_pn-${PN} = "${EZLOML_SRC_PATH}"
@@ -39,7 +40,6 @@ DEPENDS += " \
     virtual/egl \
     virtual/libgles2 \
 "
-
 
 RDEPENDS_${PN} += "sunxi-mali libvdpau-sunxi"
 

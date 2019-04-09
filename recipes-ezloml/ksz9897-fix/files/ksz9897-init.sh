@@ -25,7 +25,7 @@ case "$1" in
     if [ "$PA08_VALUE" == "0" ] && [ "$PA09_VALUE" == "0" ]
     then
         echo "applying ksz9897 workarounds"
-        /etc/ksz9787_revA1_fixup/ksz9897r-rev.A1-fixup.py
+        /etc/ksz9787_revA1_fixup/ksz9897r-rev.A1-fixup.py &
     fi
 
     $(release_input_gpio_value 8)
